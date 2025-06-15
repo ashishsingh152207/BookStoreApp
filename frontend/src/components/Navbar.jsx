@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Login from "./Login";
-
+import { useAuth } from "../context/AuthProvider"; // ✅ adjust path to match your folder structure
+import Logout from "./Logout";
 function Navbar() {
+
+   const{user:authUser,SetAuthUser}=useAuth();
+   console.log(authUser)
+
   const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "light");
   const element = document.documentElement;
 
@@ -99,14 +104,16 @@ function Navbar() {
                 <path d="M21.75 13.008a.75.75 0 0 0-.787-.666 8.25 8.25 0 0 1-9.304-9.304.75.75 0 0 0-1.414-.6A10.5 10.5 0 1 0 21.717 14.82a.75.75 0 0 0 .033-1.812z" />
               </svg>
             </label>
-
-            <div>
+             {
+              authUser?<Logout/>:
+               <div>
               <a className="bg-black text-white px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer"  onClick={()=>document.getElementById('my_modal_3').showModal()
               }>Login</a>
               
                 <Login />
               
             </div>
+            }
           </div>
         </div>
       </div>
